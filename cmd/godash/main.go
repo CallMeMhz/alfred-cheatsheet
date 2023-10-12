@@ -28,11 +28,11 @@ func main() {
 		return
 	}
 
-	var namespace, keyword string
+	var queryNamespace, keyword string
 	if len(os.Args) <= 2 {
 		keyword = os.Args[1]
 	} else {
-		namespace, keyword = os.Args[1], os.Args[2]
+		queryNamespace, keyword = os.Args[1], os.Args[2]
 	}
 
 	matched := []alfred.Item{}
@@ -49,11 +49,12 @@ func main() {
 		if !strings.HasSuffix(f.Name(), ".txt") {
 			continue
 		}
-		if !strings.HasPrefix(f.Name(), namespace) {
+		if !strings.HasPrefix(f.Name(), queryNamespace) {
 			continue
 		}
 
 		filename := filepath.Join(repo, f.Name())
+		namespace := f.Name()[:len(f.Name())-len(filepath.Ext(f.Name()))]
 		data, err := os.ReadFile(filename)
 		if err != nil {
 			fmt.Printf("cannot read %s: %v\n", filename, err)
@@ -67,11 +68,12 @@ func main() {
 			}
 			lines := strings.Split(entry, "\n")
 			title := strings.TrimSpace(lines[0])
-			if (namespace != "" && keyword == "-") || fuzzyMatch(title, keyword) {
+			if (queryNamespace != "" && keyword == "-") || fuzzyMatch(title, keyword) {
 				content := strings.TrimSpace(strings.Join(lines[1:], "\n"))
+				desc := "@" + namespace
 				item := alfred.Item{
 					Title:    title,
-					Subtitle: content,
+					Subtitle: desc,
 					Arg:      content,
 				}
 				matched = append(matched, item)
@@ -79,7 +81,7 @@ func main() {
 		}
 	}
 
-	debugMsg := fmt.Sprintf("args: %v, namespace: %v, keyword: %v", os.Args, namespace, keyword)
+	debugMsg := fmt.Sprintf("args: %v, queryNamespace: %v, keyword: %v", os.Args, queryNamespace, keyword)
 	res, _ := json.Marshal(alfred.Items{Items: matched, DebugMsg: debugMsg})
 	fmt.Print(string(res))
 }

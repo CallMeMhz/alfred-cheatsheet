@@ -67,7 +67,7 @@ func main() {
 			}
 			lines := strings.Split(entry, "\n")
 			title := strings.TrimSpace(lines[0])
-			if fuzzyMatch(title, keyword) {
+			if (namespace != "" && keyword == "-") || fuzzyMatch(title, keyword) {
 				content := strings.TrimSpace(strings.Join(lines[1:], "\n"))
 				item := alfred.Item{
 					Title:    title,
@@ -79,7 +79,8 @@ func main() {
 		}
 	}
 
-	res, _ := json.Marshal(alfred.Items{Items: matched})
+	debugMsg := fmt.Sprintf("args: %v, namespace: %v, keyword: %v", os.Args, namespace, keyword)
+	res, _ := json.Marshal(alfred.Items{Items: matched, DebugMsg: debugMsg})
 	fmt.Print(string(res))
 }
 

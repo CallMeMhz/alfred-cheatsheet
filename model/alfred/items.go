@@ -1,7 +1,8 @@
 package alfred
 
 type Items struct {
-	Items []Item `json:"items"`
+	Items    []Item `json:"items"`
+	DebugMsg string `json:"debug_msg"`
 }
 
 type Item struct {

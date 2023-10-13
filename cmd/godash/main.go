@@ -6,9 +6,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/callmemhz/godash/internal/provider"
-	"github.com/callmemhz/godash/model"
-	"github.com/callmemhz/godash/model/alfred"
+	"github.com/callmemhz/alfred-cheatsheet/internal/provider"
+	"github.com/callmemhz/alfred-cheatsheet/model"
+	"github.com/callmemhz/alfred-cheatsheet/model/alfred"
 	"github.com/samber/lo"
 	"github.com/urfave/cli/v2"
 )

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/callmemhz/godash/model"
+	"github.com/callmemhz/alfred-cheatsheet/model"
 )
 
 type TxtProviderFactory struct {

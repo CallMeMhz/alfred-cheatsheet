@@ -3,7 +3,7 @@ package provider
 import (
 	"database/sql"
 
-	"github.com/callmemhz/godash/model"
+	"github.com/callmemhz/alfred-cheatsheet/model"
 	_ "github.com/mattn/go-sqlite3"
 )
 

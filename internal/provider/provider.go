@@ -1,6 +1,6 @@
 package provider
 
-import "github.com/callmemhz/godash/model"
+import "github.com/callmemhz/alfred-cheatsheet/model"
 
 type Provider interface {
 	Search(namespace, keyword string) ([]model.Entry, error)

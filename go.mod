@@ -1,4 +1,4 @@
-module github.com/callmemhz/godash
+module github.com/callmemhz/alfred-cheatsheet
 
 go 1.19
 

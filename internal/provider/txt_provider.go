@@ -25,25 +25,13 @@ type TxtProvider struct {
 	repo string
 }
 
-type TxtEntry struct {
-	title    string
-	subtitle string
-	content  string
-	typ      model.EntryType
-	viewed   uint
-}
-
-func (entry *TxtEntry) Title() string         { return entry.title }
-func (entry *TxtEntry) Subtitle() string      { return entry.subtitle }
-func (entry *TxtEntry) Content() string       { return entry.content }
-func (entry *TxtEntry) Type() model.EntryType { return entry.typ }
-func (entry *TxtEntry) Viewed() uint          { return 0 }
+func (p *TxtProvider) Close() {}
 
 func (p *TxtProvider) Search(namespace, keyword string) ([]model.Entry, error) {
 	var entries []model.Entry
 	files, err := os.ReadDir(p.repo)
 	if err != nil {
-		return nil, fmt.Errorf("tranversal %s error: %v", p.repo, err)
+		return nil, fmt.Errorf("traversal %s error: %v", p.repo, err)
 	}
 	for _, f := range files {
 		if f.IsDir() {
@@ -74,7 +62,7 @@ func (p *TxtProvider) Search(namespace, keyword string) ([]model.Entry, error) {
 			if (namespace != "" && keyword == "-") || fuzzyMatch(title, keyword) {
 				content := strings.TrimSpace(strings.Join(lines[1:], "\n"))
 				desc := "@" + ns
-				entry := &TxtEntry{
+				entry := &Document{
 					title:    title,
 					subtitle: desc,
 					content:  content,
